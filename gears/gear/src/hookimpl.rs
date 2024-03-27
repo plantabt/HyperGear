@@ -36,7 +36,7 @@ T: Sub<Output = T> + Mul<T, Output = T> + Add<Output = T> + Copy+ NumCast + ToPr
 }
 pub type RtlQueryPerformanceCounterType=fn(PerformanceCounter:PLARGE_INTEGER)->NTSTATUS;
 pub type GetTickCountType=fn()->u32;
-pub type GetTickCount64Type=fn()->i64;
+pub type GetTickCount64Type=fn()->u64;
 pub type TimeGetTimeType=fn()->u32;
 
 #[no_mangle]
@@ -55,7 +55,7 @@ unsafe{
         result = transmute::<u64,RtlQueryPerformanceCounterType>(addr)(pPerformanceCounter) ;
  
         debug_print!("inRtlQueryPerformanceCounter: begin {}",*(*pPerformanceCounter).QuadPart());
-        let newtime = RTL_QUERY_PERFORMANCE_COUNTER_HACKER.get(*(*pPerformanceCounter).QuadPart());
+        let newtime = RTL_QUERY_PERFORMANCE_COUNTER_HACKER.get(*(*pPerformanceCounter).QuadPart() as u64);
         let  pper =pPerformanceCounter;
         (*pper).u_mut().HighPart = (newtime>>32) as i32;
         (*pper).u_mut().LowPart = (newtime&0x00000000FFFFFFFF) as u32;        
@@ -92,9 +92,9 @@ unsafe{
 
 #[no_mangle]
 #[allow(non_snake_case)]
-extern "C" fn fakeGetTickCount64()->i64{
+extern "C" fn fakeGetTickCount64()->u64{
 unsafe{
-        let mut result:i64=0;
+        let mut result:u64=0;
         //original function excuted first.
         GET_TICK_COUNT64.speed = ReadSpeed();
         debug_print!("fakeGetTickCount64 speed is: {}",GET_TICK_COUNT64.speed);
@@ -106,10 +106,10 @@ unsafe{
         result = transmute::<u64,GetTickCount64Type>(addr)() ;
 
         debug_print!("fakeGetTickCount64: begin {}",result);
-        let newtime = GET_TICK_COUNT64.get(result as i64);
+        let newtime = GET_TICK_COUNT64.get(result as u64);
 
         debug_print!("fakeGetTickCount64: end {} ",newtime as u64);
-        newtime as i64
+        newtime
 }
 
 }
@@ -168,7 +168,7 @@ pub fn initGetTickCount64(){
     unsafe{
         const HOOK_FUNC_HANE: &str ="GetTickCount64";
         const HOOK_DLL_NAME: &str = "kernel32.dll";
-        const FAKE_FUNC: extern "C" fn() -> i64 = fakeGetTickCount64;
+        const FAKE_FUNC: extern "C" fn() -> u64 = fakeGetTickCount64;
       
         
         let original_addr = GetFuncAddress(HOOK_DLL_NAME,HOOK_FUNC_HANE);
@@ -181,8 +181,8 @@ pub fn initGetTickCount64(){
         if addr==0{
             return;
         }
-        GET_TICK_COUNT64.initialtime=transmute::<u64,TimeGetTimeType>(original_addr)() as i64;
-        GET_TICK_COUNT64.initialoffset=transmute::<u64,TimeGetTimeType>(addr)() as i64;
+        GET_TICK_COUNT64.initialtime=transmute::<u64,TimeGetTimeType>(original_addr)() as u64;
+        GET_TICK_COUNT64.initialoffset=transmute::<u64,TimeGetTimeType>(addr)() as u64;
         debug_print!("initGetTickCount64: {:?} - {:?}",GET_TICK_COUNT64.initialtime,GET_TICK_COUNT64.initialoffset); 
     }
 }
@@ -233,8 +233,8 @@ pub fn initRtlQueryPerformanceCounter(){
         transmute::<u64,RtlQueryPerformanceCounterType>(original_addr)(&mut inittime as *mut _ as PLARGE_INTEGER);
         transmute::<u64,RtlQueryPerformanceCounterType>(addr)(&mut initialoffset as *mut _ as PLARGE_INTEGER);
 
-        RTL_QUERY_PERFORMANCE_COUNTER_HACKER.initialtime=inittime as i64;
-        RTL_QUERY_PERFORMANCE_COUNTER_HACKER.initialoffset=initialoffset as i64;
+        RTL_QUERY_PERFORMANCE_COUNTER_HACKER.initialtime=inittime as u64;
+        RTL_QUERY_PERFORMANCE_COUNTER_HACKER.initialoffset=initialoffset as u64;
         debug_print!("RtlQueryPerformanceCounter: {:?} - {:?}",inittime,initialoffset);
     }
 }
