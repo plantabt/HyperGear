@@ -1,2 +1,5 @@
 /target
 *.lock
+/backup
+run.ps1
+.vscode
