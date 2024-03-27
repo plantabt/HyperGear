@@ -15,26 +15,68 @@
 	import javascript from 'highlight.js/lib/languages/javascript';
 	import typescript from 'highlight.js/lib/languages/typescript';
 	import Icon from 'svelte-awesome';
+
+	import   {close,windowMinimize,userSecret}from 'svelte-awesome/icons';
+    import { emit, listen } from '@tauri-apps/api/event';
+	// Floating UI for Popups
+	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
+	import { storePopup } from '@skeletonlabs/skeleton';
+
+
+	import { onMount } from 'svelte';
+    import { registerAll, unregister } from '@tauri-apps/api/globalShortcut';
+
+	let bankeys=['Ctrl+Shift+J','Ctrl+Shift+I','Ctrl+U','Ctrl+J','Ctrl+P','Ctrl+F','Ctrl+G'];
+	let bankeys_js=[123, 114,116,118];//123=f12,114=f3,116=f5,118=f7
+
+	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
+
 	hljs.registerLanguage('xml', xml); // for HTML
 	hljs.registerLanguage('css', css);
 	hljs.registerLanguage('javascript', javascript);
 	hljs.registerLanguage('typescript', typescript);
 	storeHighlightJs.set(hljs);
 
-	// Floating UI for Popups
-	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
-	import { storePopup } from '@skeletonlabs/skeleton';
-	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
-	import { onMount } from 'svelte';
-
-	onMount(async () => {
-		//await invoke("show",{visible:true});
+	onMount(() => {
+		reghotkeys();
+		window.onkeydown = function (e) {
+			var keyCode = e.keyCode || e.which || e.charCode;
+			console.log(keyCode);
+			if (bankeys_js.indexOf(keyCode) > -1) {
+				e.preventDefault();
+			}
+		}
 		appWindow.show();
 	});
+	
+	async function reghotkeys(){
+		await registerAll(bankeys, (shortcut) => {
+			//console.log(`Shortcut ${shortcut} triggered`);
+		});
+	}
+	async function unreghotkeys(){
+		for(let i in bankeys){
+			//console.log(bankeys[i]);
+			await unregister(bankeys[i]);
+		}
 
-	import   {close,windowMinimize,userSecret}from 'svelte-awesome/icons';
-    import { emit, listen } from '@tauri-apps/api/event';
+	}
+	async function setOnfocusEvent(){
+		await appWindow.onFocusChanged(({ payload: focused }) => {
+			if(focused){
+				reghotkeys();
+			}else{
+				unreghotkeys();
+			}
+		});
+	}
+	async function init(){
+		
+		setOnfocusEvent();
+	}
+	init();
+
 
 	
 	initializeStores();
@@ -88,12 +130,6 @@ function MessageBox(mode_store:any,_title,_info,_type): void {
 	let unlisten;
 	async function init_event(){
 		unlisten = await listen("front-event",(event)=>{
-			if(event.payload["event"]=="call_js_function"){
-				console.log(event.payload["data"]);
-				console.log('Message from Rust:1');
-				console.log('Message from Rust:1');
-				modalConfirm(modalStore);
-			}
 			if(event.payload["event"]=="MessageBox"){
 				let data = event.payload["data"];
 				MessageBox(modalStore,data.title,data.info,data.type)
@@ -102,10 +138,8 @@ function MessageBox(mode_store:any,_title,_info,_type): void {
 	}
 	init_event();
 
-	function myJavaScriptFunction(message: string) {
-		console.log('Message from Rust:', message);
-		// 进行其他操作
-	}
+
+
 </script>
 
 <!-- App Shell -->
