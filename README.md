@@ -32,3 +32,7 @@
 > ##### main window ctrl+shift+i
 
 # Screenshot
+
+
+https://github.com/plantabt/HyperGear/assets/139223769/c5d05b95-d519-4ef3-89b5-849aea1508c5
+
