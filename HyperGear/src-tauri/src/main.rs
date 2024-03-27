@@ -158,7 +158,11 @@ fn main() {
     *G_APP_INFO.lock().unwrap() = Some(AppInfo::new());
     tauri::Builder::default()
     .setup(|app| {
-        let window = app.get_window(get_appname().as_str()).unwrap(); // 获取主窗口的引用
+        let window = app.get_window(get_appname().as_str()).unwrap();
+        #[cfg(debug_assertions)] 
+        {
+            window.open_devtools();
+        }
         utilis::init(window);
         Ok(())
     })
