@@ -42,7 +42,6 @@
 		reghotkeys();
 		window.onkeydown = function (e) {
 			var keyCode = e.keyCode || e.which || e.charCode;
-			console.log(keyCode);
 			if (bankeys_js.indexOf(keyCode) > -1) {
 				e.preventDefault();
 			}
