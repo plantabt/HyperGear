@@ -45,4 +45,4 @@
   > Visit [Tauri debugging](https://tauri.app/v1/guides/debugging/vs-code)
    
 ### Feature Demonstration:
-https://github.com/plantabt/HyperGear/assets/139223769/26ce0cb5-b69c-4999-a08e-647a01fc626c
+https://youtu.be/N3KDAUhmiWM
