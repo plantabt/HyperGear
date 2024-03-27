@@ -30,6 +30,7 @@
 2. Install package and build
    ```bash
    npm install
+3. Back to root dir and build
    cd ..
    cargo tauri build
    -or-
