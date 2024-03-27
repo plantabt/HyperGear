@@ -41,6 +41,8 @@
 2. At the main window
    ```bash
    Press:Ctrl + Shift + I
-
+3. Read the document
+  > Visit [Tauri debugging](https://tauri.app/v1/guides/debugging/rustrover)
+   
 ### Feature Demonstration:
 https://github.com/plantabt/HyperGear/assets/139223769/26ce0cb5-b69c-4999-a08e-647a01fc626c
