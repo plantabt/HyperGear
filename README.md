@@ -31,6 +31,8 @@
    npm install
    cd ..
    cargo tauri build
+   -or-
+   cargo tauri build --debug
    
 ### How to Debug:
 1. Run for debugging
