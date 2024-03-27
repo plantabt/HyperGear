@@ -1,0 +1,17 @@
+[workspace]
+resolver="2"
+exclude=[
+    "HyperGear",
+    "HyperGearPrj/HyperGear/src-tauri/icons"
+]
+members = [
+    "gears/gear",
+    "HyperGear/src-tauri",
+    "common_crate"
+]
+
+
+
+[workspace.dependencies]
+rand = "0.8.5" 
+regex = { version = "1.6.0", default-features = false, features = ["std"] }

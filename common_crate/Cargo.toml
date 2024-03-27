@@ -1,0 +1,30 @@
+[package]
+name = "common_crate"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tauri = { version = "1", features = [ "window-minimize", "window-show", "window-hide", "window-unmaximize", "window-close", "window-start-dragging", "window-unminimize", "shell-open", "devtools"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+lazy_static ="1.4.0"
+shared_memory="0.12.4"
+md5="0.7.0"
+memmap2="0.9.4"
+winapi = { version = "0.3.9", features = ["wincon"] }
+
+[dependencies.windows]
+version = "0.54.0"
+features = [
+    #"Data_Xml_Dom",
+    "Win32_Foundation",
+    "Win32_Storage",
+    "Win32_Security",
+    "Win32_Storage_FileSystem",
+    "Win32_System_Threading",
+    "Win32_UI_WindowsAndMessaging",
+    "Win32_System_LibraryLoader",
+    "Win32_System_Memory",
+    "Win32_System_Diagnostics_ToolHelp",
+    "Win32_System_Diagnostics_Debug",
+]
