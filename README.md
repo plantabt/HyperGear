@@ -1,36 +1,44 @@
-# This is a Speedhacking software.
-#### Development languages: 
+# HyperGear: A Speedhacking Software
+
+## Development Languages:
 1. Rust
 2. Asm
-3. Typescript/Javascript
-4. Html
+3. TypeScript/JavaScript
+4. HTML
 5. CSS
-#### Useing technically:
-1. Dll inject
-2. Inline hook (asm)
-3. Tauri app + skelton UI Toolkit(Svelte + Tailwind)
 
+## Using Technology:
+1. DLL injection
+2. Inline hook (ASM)
+3. Tauri app + Skeleton UI Toolkit (Svelte + Tailwind)
 
-# How to build:
-1. ### Install CLIs:
-* ##### Prerequisites
-> https://tauri.app/v1/guides/getting-started/prerequisites
-* ##### Install cli
-> ##### cargo install tauri-cli
+## How to Build:
 
-2. ### Build:
-> ##### cd HyperGear
+### Install CLIs:
+* #### Prerequisites
+  > Visit [Tauri prerequisites](https://tauri.app/v1/guides/getting-started/prerequisites) for more information.
+  
+* #### Install Tauri CLI
+  > Run `cargo install tauri-cli`
 
-> ##### npm install
+### Build the Project:
+1. Navigate to the project directory:
+   ```bash
+   cd HyperGear
 
-> ##### cd..
+2. Install package and build
+   ```bash
+   npm install
+   cd ..
+   cargo tauri build
+   
+### How to Debug:
+1. Run for debugging
+   ```bash
+     cargo tauri dev
+2. At the main window
+   ```bash
+   Press:Ctrl + Shift + I
 
-> ##### cargo tauri build
-
-# How to debug
-> ##### cargo tauri dev
-> ##### main window ctrl+shift+i
-
-# Feature demonstration
+### Feature Demonstration:
 https://github.com/plantabt/HyperGear/assets/139223769/26ce0cb5-b69c-4999-a08e-647a01fc626c
-
