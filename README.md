@@ -31,8 +31,6 @@
 > ##### cargo tauri dev
 > ##### main window ctrl+shift+i
 
-# Screenshot
-
-
-https://github.com/plantabt/HyperGear/assets/139223769/c5d05b95-d519-4ef3-89b5-849aea1508c5
+# Feature demonstration
+https://github.com/plantabt/HyperGear/assets/139223769/26ce0cb5-b69c-4999-a08e-647a01fc626c
 
