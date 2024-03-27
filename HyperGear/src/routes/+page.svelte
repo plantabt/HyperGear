@@ -13,23 +13,25 @@
 	import   {userSecret}from 'svelte-awesome/icons';
     import { emit } from '@tauri-apps/api/event';
     import { getVersion } from '@tauri-apps/api/app';
+	import { registerAll, unregister, unregisterAll } from '@tauri-apps/api/globalShortcut';
 
     let g_version:string="";
 	let toggle_speed=true;
 	let g_speed: number = 0; // %
 	let max:number =100;
 	let g_exe_name="";
+	let speadtxt=0;
 	
-	async function drag_window(e:Event){
-		if(e.target["id"]=="dr_bkg1"){
-		}
-	}
 
-	async function testevent(e:Event){
-		await invoke("testevent",{});
-	}
 
+	async function init(){
+
+		g_version = await CDelegate.GetVersion();
+	}
 	
+
+
+
 	async function injection(e:Event){
 		if(g_exe_name==""){
 			return;
@@ -44,6 +46,7 @@
 		let dllpath = await CDelegate.GetCurrentDir()+"\\gear.dll";
 		CDelegate.Inject(g_exe_name,dllpath);
 	}
+
 	async function changeSpeed(speed:number){
 		if($globalVar.exe_info[0].ismapped==true){
 			if(!toggle_speed){
@@ -53,10 +56,7 @@
 		}
 	}
 	
-	async function init(){
-		g_version = await CDelegate.GetVersion();
-	}
-	init();
+
 
 	function apply(e:Event){
 		g_speed=speadtxt*10;
@@ -72,7 +72,7 @@
 		
 		console.log(toggle_speed);
 	}
-	let speadtxt=0;
+	
 $: {
 
 		if(g_speed<=10.0){
@@ -85,6 +85,8 @@ $: {
 		speadtxt=cal_speed;
 	
 }
+
+	init();
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
