@@ -22,7 +22,7 @@
   > Run `cargo install tauri-cli`
 
 ### Build the Project:
-1. Navigate to the project directory:
+1. Navigate to the tauri app directory:
    ```bash
    cd HyperGear
 
