@@ -25,8 +25,7 @@
 1. Navigate to the tauri app directory:
    ```bash
    git clone xxxx
-   cd HyperGear
-     ->cd HyperGear
+   cd HyperGear/HyperGear
 
 2. Install package and build
    ```bash
