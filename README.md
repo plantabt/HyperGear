@@ -41,7 +41,9 @@
 2. At the main window
    ```bash
    Press:Ctrl + Shift + I
-3. Read the document
+3. Ida and x64Dbg
+   
+4. Read the document
   > Visit [Tauri debugging](https://tauri.app/v1/guides/debugging/vs-code)
    
 ### Feature Demonstration:
