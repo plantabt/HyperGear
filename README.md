@@ -34,8 +34,7 @@
    ```bash
    cd ..
    [release]
-   cargo build -p gear --release
-   cargo tauri build
+   release.ps1
    -
    [debug]
    cargo build -p gear
