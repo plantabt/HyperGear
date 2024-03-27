@@ -44,7 +44,10 @@
 		await CDelegate.WriteSpeed(g_exe_name,$globalVar.exe_info[0].speed);
 
 		let dllpath = await CDelegate.GetCurrentDir()+"\\gear.dll";
-		CDelegate.Inject(g_exe_name,dllpath);
+		if(await CDelegate.Inject(g_exe_name,dllpath)!=0){
+			CDelegate.MessageBox("Good Job.","Speedhacking injected!");
+		}
+
 	}
 
 	async function changeSpeed(speed:number){
