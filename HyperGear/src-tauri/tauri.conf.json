@@ -48,6 +48,9 @@
       "csp": null
     },
     "bundle": {
+      "resources": [
+        "./gear.dll"
+      ],
       "active": true,
       "targets": "all",
       "identifier": "hypergear",
