@@ -33,8 +33,11 @@
 3. Back to root dir and build
    ```bash
    cd ..
+   ### [release]
+   cargo build -p gear --release
    cargo tauri build
-   -or-
+   ### [debug]
+   cargo build -p gear
    cargo tauri build --debug
    
 ### How to Debug:
