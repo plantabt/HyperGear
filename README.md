@@ -26,7 +26,7 @@
    ```bash
    git clone xxxx
    cd HyperGear
-   cd HyperGear
+     ->cd HyperGear
 
 2. Install package and build
    ```bash
