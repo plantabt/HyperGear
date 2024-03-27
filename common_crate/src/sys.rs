@@ -54,12 +54,12 @@ pub fn GetFuncAddress(dllname:&str,funcname:&str)->u64{
         Ok(_hmod) => {
             hmod=_hmod;
         },
-        Err(e) => {
-            debug_print!("GetFuncAddr dll not found1: {},{:?}",dllname,e);
+        Err(_e) => {
+            debug_print!("GetFuncAddr dll not found1: {},{:?}",dllname,_e);
             match LoadLibraryA(t_dllname){
                 Ok(_hmod) => hmod=_hmod,
-                Err(e) => {
-                    debug_print!("GetFuncAddr dll not found2: {},{:?}",dllname,e);
+                Err(_e) => {
+                    debug_print!("GetFuncAddr dll not found2: {},{:?}",dllname,_e);
                     return 0
                 },
             }

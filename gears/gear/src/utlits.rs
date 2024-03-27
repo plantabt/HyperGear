@@ -11,8 +11,8 @@ pub fn ReadSpeed()->f32{
             ReadSharedMem(hmapping, transmute(&mut fspeed), size_of::<f32>() as u64);
             fspeed
         }
-        Err(e) =>{
-            debug_print!("dll OpenSharedMem failed: {:?}",e);
+        Err(_e) =>{
+            debug_print!("dll OpenSharedMem failed: {:?}",_e);
             1.0
         },
     }

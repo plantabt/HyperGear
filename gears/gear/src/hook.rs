@@ -44,14 +44,14 @@ pub fn GetImportTableFuncAddr(baseAddr:u64,dllname:&str,funcname:&str)->u64 {
                 break;
             }
             let mut pRealIAT = ((baseAddr as u64) + ((*pID).FirstThunk as u64 )) as PIMAGE_THUNK_DATA;
-            for i in 0..1024{
+            for _i in 0..1024{
                 let funiat = (*pRealIAT).u1.Function().to_u64().unwrap();
                 if funiat==0{
                     break;
                 }
                 
                 if funiat==togetaddr{
-                    debug_print!("function({}): iat addr: 0x{:x}",i,pRealIAT as u64);
+                    debug_print!("function({}): iat addr: 0x{:x}",_i,pRealIAT as u64);
                     return pRealIAT as u64;
                 }
                 

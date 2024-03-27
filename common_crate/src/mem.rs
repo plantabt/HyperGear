@@ -4,7 +4,7 @@ use std::{ffi::c_void, fs::OpenOptions, ptr::{self}};
 use memmap2::MmapMut;
 use windows::Win32::{Foundation::{HANDLE, MAX_PATH}, Storage::FileSystem::GetTempPathA, System::Memory::{MapViewOfFile, VirtualProtect, FILE_MAP_ALL_ACCESS, PAGE_EXECUTE_READWRITE, PAGE_PROTECTION_FLAGS}};
 
-use crate::{debug_print, log, utilis::make_md5_string};
+use crate::{debug_print, utilis::make_md5_string};
 #[allow(non_snake_case)]
 pub fn GetTempPath()->String{
     unsafe{
@@ -96,8 +96,8 @@ pub fn WriteAbleMem(memaddr:u64,esize:usize)->bool{
             Ok(_) => {
                 true
             },
-            Err(e) => {
-                debug_print!("write_able_mem error: 0x{:x},{:?}",memaddr,e);
+            Err(_e) => {
+                debug_print!("write_able_mem error: 0x{:x},{:?}",memaddr,_e);
                 false
             },
     }
