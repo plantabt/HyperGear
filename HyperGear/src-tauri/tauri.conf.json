@@ -11,6 +11,9 @@
   },
   "tauri": {
     "allowlist": {
+      "globalShortcut": {
+        "all": true
+      },
       "window": {
         "all": false,
         "close": true,
