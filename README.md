@@ -37,7 +37,7 @@
 ### How to Debug:
 1. Run for debugging
    ```bash
-     cargo tauri dev
+   cargo tauri dev
 2. At the main window
    ```bash
    Press:Ctrl + Shift + I
