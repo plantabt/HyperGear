@@ -51,7 +51,11 @@
 	
 	async function reghotkeys(){
 		for(let i in bankeys){
+			try{
 			await register(bankeys[i], (shortcut) => {});//console.log(`Shortcut ${shortcut} triggered`);		
+			}catch{
+				
+			}
 		}
 	}
 	async function unreghotkeys(){
