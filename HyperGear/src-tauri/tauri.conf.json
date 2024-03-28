@@ -51,6 +51,11 @@
       "resources": [
         "./gear.dll"
       ],
+      "windows": {
+        "webviewInstallMode": {
+          "type": "downloadBootstrapper"
+        }
+      },
       "active": true,
       "targets": "all",
       "identifier": "hypergear",
