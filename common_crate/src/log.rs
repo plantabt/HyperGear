@@ -10,6 +10,9 @@ macro_rules! debug_print{
 #[macro_export]
 macro_rules! create_log_window{
     ()=>{
-       unsafe { AllocConsole(); }
+       unsafe {
+        #[cfg(debug_assertions)]
+         AllocConsole(); 
+        }
 }
 }
