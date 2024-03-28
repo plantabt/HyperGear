@@ -101,7 +101,7 @@ $: {
 		<h2 data-tauri-drag-region class="h2 mt-[-20px] mb-[60px]" >{g_version}</h2>
 		
 		<div class="input-group grid-cols-[auto_1fr_auto] h-[32px] text-[12px]" >
-			<div class="input-group-shim h-[30px] text-[12px]" >EXE</div>
+			<div class="input-group-shim h-[30px] text-[12px]" >PROCESS</div>
 			<input type="search" class="h-[30px] text-[12px]" placeholder="Input name of exe..." bind:value={g_exe_name}/>
 			<button class="variant-filled h-[30px] text-[12px]" on:click={injection}><Icon data={userSecret}/> (INJECT)</button>
 		</div>
