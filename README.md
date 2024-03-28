@@ -34,11 +34,10 @@
    ```bash
    cd ..
    [release]
-   release.ps1
+   release.bat
    -
    [debug]
-   cargo build -p gear
-   cargo tauri build --debug
+   debug.bat
    
 ### How to Debug:
 1. Run for debugging
