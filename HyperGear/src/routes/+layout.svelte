@@ -24,7 +24,7 @@
 
 
 	import { onMount } from 'svelte';
-    import { registerAll, unregister } from '@tauri-apps/api/globalShortcut';
+    import { register, registerAll, unregister } from '@tauri-apps/api/globalShortcut';
 
 	let bankeys=['Ctrl+Shift+J','Ctrl+Shift+I','Ctrl+U','Ctrl+J','Ctrl+P','Ctrl+F','Ctrl+G'];
 	let bankeys_js=[123, 114,116,118];//123=f12,114=f3,116=f5,118=f7
@@ -50,9 +50,9 @@
 	});
 	
 	async function reghotkeys(){
-		await registerAll(bankeys, (shortcut) => {
-			//console.log(`Shortcut ${shortcut} triggered`);
-		});
+		for(let i in bankeys){
+			await register(bankeys[i], (shortcut) => {});//console.log(`Shortcut ${shortcut} triggered`);		
+		}
 	}
 	async function unreghotkeys(){
 		for(let i in bankeys){
