@@ -31,7 +31,14 @@ T: Sub<Output = T> + Mul<T, Output = T> + Add<Output = T> + Copy+ NumCast + ToPr
     pub fn get(self,current_time:T)->T {  
         let time_delta = current_time - self.initialtime;
         let result = (time_delta.to_f32().unwrap() * self.speed)+ self.initialoffset.to_f32().unwrap();
-        NumCast::from(result).unwrap()
+        let num = NumCast::from(result) as Option<T>;
+        match num{
+            Some(ret) =>ret,
+            None => {
+                debug_print!("get time failed----> {:?}",result);
+                num.unwrap()
+            },
+        }
    }
 }
 pub type RtlQueryPerformanceCounterType=fn(PerformanceCounter:PLARGE_INTEGER)->NTSTATUS;
