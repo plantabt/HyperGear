@@ -91,6 +91,11 @@ pub fn ReadSharedMem( mut hmapfile: MmapMut, pReaddata:*mut u8, rdsize:u64) {
 #[allow(non_snake_case)]
 pub fn WriteAbleMem(memaddr:u64,esize:usize)->bool{
     unsafe {
+
+        if memaddr==0 {
+            debug_print!("WriteAbleMem: {} failed.",memaddr);
+            return false;
+        }
         let mut oldprot=PAGE_PROTECTION_FLAGS(0);
         match  VirtualProtect(memaddr as *const c_void,esize,PAGE_EXECUTE_READWRITE,&mut oldprot) {
             Ok(_) => {
