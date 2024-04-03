@@ -1,6 +1,6 @@
 [package]
 name = "HyperGear"
-version = "1.0.32"
+version = "1.0.42"
 description = "HyperGear"
 authors = ["PLAN T LABS"]
 edition = "2021"

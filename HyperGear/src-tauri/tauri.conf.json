@@ -7,7 +7,7 @@
   },
   "package": {
     "productName": "HyperGear",
-    "version": "1.0.32"
+    "version": "1.0.42"
   },
   "tauri": {
     "allowlist": {
