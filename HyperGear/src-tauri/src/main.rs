@@ -1,18 +1,40 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-
-use std::{fs::OpenOptions, mem::{size_of, transmute}};
+use sysinfo::{System};
+use std::{collections::HashMap, fs::OpenOptions, mem::{size_of, transmute}};
 
 use common_crate::{debug_print, mem::{CreateSharedMem, OpenSharedMem, ReadSharedMem, WriteSharedMemo}, sys::GetCurrentDir, utilis::{self, make_md5_string, AppInfo}};
 
+use serde_json::{Value,json};
 use tauri::{  AppHandle, Manager, Window};
 use utilis::{ EnabledDebugPriilage, inject_dll, GetProcessIdByName, G_APP_INFO};
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 
 mod global;
+#[tauri::command]
+fn get_process_list()->Value{
+    let mut system = System::new_all();
+    system.refresh_all();
+     // 创建一个 JSON 对象
+     let mut json_list = Vec::new();
+    for (pid, process) in system.processes() {
+        let json_item = json!({
+            "name":process.name(),
+            "pid":pid.as_u32()
+        });
+        json_list.push(json_item);
+        //println!("{}: {}", pid, process.name());
+    }
 
+
+    let json_ret = json!({
+        "process":json_list
+    });
+
+    json_ret
+}
 #[tauri::command]
 fn show(window:Window,visible:bool)->bool{
     
@@ -43,13 +65,19 @@ fn message_box(title:String,info:String,msgtype:String){
     common_crate::utilis::alert(title,info);
 }
 #[tauri::command]
-fn inject(window: Window,process_name:String,dllpath:String)->u32 {
+fn inject(process_name:String,dllpath:String)->u32 {
     let pid = GetProcessIdByName(process_name.clone());
-    debug_print!("{}",dllpath);
-    debug_print!("{}",process_name);
+    debug_print!("inject: {}->{}",process_name,dllpath);
     inject_dll(pid,dllpath.to_owned());
 
     return pid
+}
+#[tauri::command]
+fn inject_by_pid(pid:u64,dllpath:String)->bool {
+    //let pid = GetProcessIdByName(process_name.clone());
+    debug_print!("inject_by_pid: {}->{}",pid,dllpath);
+
+    inject_dll(pid as u32,dllpath.to_owned())
 }
 #[tauri::command]
 fn read_shared_mem(memname:String)->f32{
@@ -171,6 +199,7 @@ fn main() {
                                                 minimize,
                                                 drag_window,
                                                 inject,
+                                                inject_by_pid,
                                                 write_shared_mem,
                                                 read_shared_mem,
                                                 get_version,
@@ -179,7 +208,8 @@ fn main() {
                                                 create_shared_mem,
                                                 is_shared_mem,
                                                 open_shared_mem,
-                                                get_current_path
+                                                get_current_path,
+                                                get_process_list,
                                                 ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

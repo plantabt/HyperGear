@@ -24,10 +24,17 @@ export class CDelegate{
     public static async Inject(exename:string,dllpath:string){
         return await invoke("inject",{processName:exename,dllpath:dllpath});
     }
+    public static async InjectByPid(pid:number,dllpath:string){
+        return await invoke("inject_by_pid",{pid:pid,dllpath:dllpath});
+    }
     public static async GetCurrentDir():Promise<string>{
         return await invoke("get_current_path",{});
     }
     public static async MessageBox(title:String,info:String){
         return await invoke("message_box",{title:title,info:info,msgtype:""});
+    }
+    public static async GetProcessList():Promise<any>{
+        let process_list =  await invoke("get_process_list",{});
+        return process_list["process"];
     }
 };
