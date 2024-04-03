@@ -96,7 +96,7 @@ impl HOOK {
             match GetModuleHandleA(t_exename){
                 Ok(baseaddr) => {
                     let replace = GetImportTableFuncAddr(baseaddr.0 as u64,dllname,funcname);
-                 
+                    
                     if WriteAbleMem(replace,0x10)==true{
                         ptr::write::<u64>(replace as *mut u64,newfunc);
                     }
